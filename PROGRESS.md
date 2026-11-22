@@ -1,3 +1,5 @@
 # Game progress
 
 2026-11-23: Independent five-level Godot 4.7.2 puzzle created. Core row/column model and 12-move adjudication pass 24 headless assertions. Bundled licensed Noto Sans KR glyph-tested. Letterpress UI, synthesized sounds, title/tutorial/play/restart/clear/fail screens, persistent unlock/best/mute implemented. Real Chrome Web export inspected at desktop and 320px; keyboard and touch paths reach success and failure. Public Pages deployment built and live bytes/browser verified; final documentation push and build status verified separately.
+
+2026-11-23 accessibility pass: Enlarged and darkened board title, move/status line, goal caption/words, current words and minor row/help labels; applied 1-unit ink text outline. Kept 94-unit row arrows and game mechanics unchanged. Export shell now centers aspect-locked canvas against ink background, eliminating black bands without cropping. Re-ran import/model/font/export and local desktop/mobile full-state browser flows; refreshed `qa/`. See `TESTS.md` for evidence and `DEPLOY.md` for mandatory post-export step.

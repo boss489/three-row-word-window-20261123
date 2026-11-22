@@ -191,7 +191,9 @@ func block(x: float, y: float, w: float, h: float, color: Color, edge: Color = I
 
 func label(text: String, x: float, baseline: float, size: int = 24, color: Color = INK, centered := false) -> void:
     var width := font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x
-    draw_string(font, Vector2(x - width * 0.5 if centered else x, baseline), text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, color)
+    var origin := Vector2(x - width * 0.5 if centered else x, baseline)
+    draw_string_outline(font, origin, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, 1, color)
+    draw_string(font, origin, text, HORIZONTAL_ALIGNMENT_LEFT, -1, size, color)
 
 func button(text: String, x: float, y: float, w: float, h: float, fill: Color = CREAM, size: int = 27) -> void:
     block(x, y, w, h, fill)
@@ -234,7 +236,7 @@ func _draw() -> void:
 
 func draw_title() -> void:
     label("세 줄 단어창", 320, 275, 56, INK, true)
-    label("THREE-ROW WORD WINDOW", 320, 315, 19, AQUA, true)
+    label("THREE-ROW WORD WINDOW", 320, 315, 21, INK, true)
     for c in 3:
         block(82 + c * 164, 356, 145, 153, CREAM)
         label(["C", "D", "S"][c], 154 + c * 164, 447, 78, INK, true)
@@ -246,14 +248,14 @@ func draw_title() -> void:
 
 func draw_board() -> void:
     var tutorial := screen == "TUTORIAL"
-    label("세 줄 단어창", 320, 208, 39, INK, true)
-    label("%s  ·  %02d / 12 이동" % [("사용법" if tutorial else "창 %d / 5" % (model.level + 1)), model.moves], 320, 247, 22, AQUA, true)
-    label("목표 · 세로로 읽기", 320, 286, 21, INK, true)
+    label("세 줄 단어창", 320, 207, 45, INK, true)
+    label("%s  ·  %02d / 12 이동" % [("사용법" if tutorial else "창 %d / 5" % (model.level + 1)), model.moves], 320, 249, 28, INK, true)
+    label("목표 · 세로로 읽기", 320, 289, 25, INK, true)
     for c in 3:
         var col: String = model.columns()[c]
         var matched: bool = col == Model.TARGETS[c]
         block(143 + c * 119, 304, 110, 97, Color("d4e9d8") if matched else CREAM, GOLD if matched else INK)
-        label(Model.TARGETS[c], 198 + c * 119, 360, 28, INK, true)
+        label(Model.TARGETS[c], 198 + c * 119, 360, 33, INK, true)
         label("OK" if matched else "·", 198 + c * 119, 388, 20, INK, true)
     var rr := model.rows()
     for r in 3:
@@ -266,16 +268,16 @@ func draw_board() -> void:
             var x := 206.0 + c * 114.0 + shift
             draw_line(Vector2(149 + (c + 1) * 114, y + 13), Vector2(149 + (c + 1) * 114, y + 82), Color("c4bfab"), 2) if c < 2 else null
             label(rr[r][c], x, y + 66, 58, INK, true)
-        label("%d" % (r + 1), 145, y + 15, 17, AQUA, true)
+        label("%d" % (r + 1), 145, y + 15, 19, INK, true)
     if tutorial:
         label("1행의 화살표를 눌러 보세요!", 320, 817, 27, INK, true)
         label("한 행이 움직이면 세 세로 단어가 모두 변합니다", 320, 848, 20, INK, true)
         if tutorial_moved:
             button("이해했어요 · 시작 →", 71, 865, 498, 72, GOLD, 25)
         else:
-            label("↑↓ 행 선택 · ←→ 이동 · 1/2/3 바로 선택", 320, 909, 18, AQUA, true)
+            label("↑↓ 행 선택 · ←→ 이동 · 1/2/3 바로 선택", 320, 909, 19, INK, true)
     else:
-        label("현재  %s   /   %s   /   %s" % [model.columns()[0], model.columns()[1], model.columns()[2]], 320, 817, 25, INK, true)
+        label("현재  %s   /   %s   /   %s" % [model.columns()[0], model.columns()[1], model.columns()[2]], 320, 817, 29, INK, true)
         button("다시", 45, 847, 252, 78, CREAM, 25)
         button("%s  소리" % ("○" if model.mute else "♪"), 343, 847, 252, 78, CREAM, 25)
 
